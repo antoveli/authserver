@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 
 const validarJWT = (req, res = response, next) => {
 
-    console.log('Entrando a validar token');
     const token = req.headers['x-token'];
 
     if(!token){
@@ -15,11 +14,11 @@ const validarJWT = (req, res = response, next) => {
 
     try {
 
-        const { uid, name} = jwt.verify(token, process.env.SECRET_JWT_SEED);
-        console.log('despuest del verify token en el try');
-        req.uid = uid;
+        const { id, name} = jwt.verify(token, process.env.SECRET_JWT_SEED);
+        
+        req.uid = id;
         req.name = name;
-        console.log(req.uid);
+        
 
     } catch (error) {
         return res.status(401).json({
@@ -29,7 +28,7 @@ const validarJWT = (req, res = response, next) => {
     }
 
     //Todo ok
-    next
+    next()
 }
 
 
